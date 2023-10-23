@@ -1,0 +1,7 @@
+@resource = tags
+@idUser = 1
+
+###
+# @name index
+GET {{url}}/{{resource}}/{{idUser}} HTTP/1.1
+
