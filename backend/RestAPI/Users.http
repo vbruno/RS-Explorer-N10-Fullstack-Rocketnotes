@@ -45,3 +45,18 @@ content-type: application/json
 }
 
 ###
+
+PATCH {{url}}/{{resource}}/avatar
+Authorization: bearer {{token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="text"
+
+tittle
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="avatar"; filename="avatar.png"
+Content-Type: image/png
+
+< ./avatar.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
