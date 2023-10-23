@@ -1,0 +1,12 @@
+@resource = sessions
+
+###
+###
+# @name create
+POST {{url}}/{{resource}}
+content-type: application/json
+
+{
+  "email":"bruno.velho@gmail.com",
+  "password":"123"
+}
