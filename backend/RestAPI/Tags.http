@@ -3,5 +3,5 @@
 
 ###
 # @name index
-GET {{url}}/{{resource}}/{{idUser}} HTTP/1.1
-
+GET {{url}}/{{resource}} HTTP/1.1
+Authorization: bearer {{token}}

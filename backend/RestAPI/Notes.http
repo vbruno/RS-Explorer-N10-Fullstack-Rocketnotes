@@ -3,11 +3,14 @@
 @idNote = 2
 
 ###
-GET {{url}}/{{resource}}/ HTTP/1.1
+GET {{url}}/{{resource}} HTTP/1.1
+Authorization: bearer {{token}}
+
 
 ###
 # @name createNote
-POST {{url}}/{{resource}}/1
+POST {{url}}/{{resource}}
+Authorization: bearer {{token}}
 content-type: application/json
 
 {
@@ -20,12 +23,14 @@ content-type: application/json
 
 ###
 # @name getNote
-GET {{url}}/{{resource}}/{{idNote}} HTTP/1.1
+GET {{url}}/{{resource}} HTTP/1.1
+Authorization: bearer {{token}}
 
 ###
 
 # @name updateNote
 PUT {{url}}/{{resource}}/{{id}} HTTP/1.1
+Authorization: bearer {{token}}
 content-type: application/json
 
 {
@@ -39,6 +44,7 @@ content-type: application/json
 # @name deleteNote
 
 DELETE {{url}}/{{resource}}/{{idNote}} HTTP/1.1
+Authorization: bearer {{token}}
 
 ###
 # @name Index
@@ -46,4 +52,4 @@ DELETE {{url}}/{{resource}}/{{idNote}} HTTP/1.1
 @queryTitle = Nodejs
 @queryTags = node
 GET {{url}}/{{resource}}?user_id={{queryUserID}}&title={{queryTitle}}&tags={{queryTags}} HTTP/1.1
-
+Authorization: bearer {{token}}

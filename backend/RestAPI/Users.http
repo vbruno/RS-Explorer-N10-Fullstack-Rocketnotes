@@ -20,7 +20,8 @@ content-type: application/json
 
 # @name updateUser
 @id = 2
-PUT {{url}}/{{resource}}/{{id}} HTTP/1.1
+PUT {{url}}/{{resource}} HTTP/1.1
+Authorization: bearer {{token}}
 content-type: application/json
 
 {
