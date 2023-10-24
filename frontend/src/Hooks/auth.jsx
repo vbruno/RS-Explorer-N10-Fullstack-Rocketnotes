@@ -1,34 +1,44 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
-import { api } from '../services/api'
+import { api } from "../services/api";
 
 const AuthContext = createContext({});
 
 // eslint-disable-next-line react/prop-types
-export function AuthProvider( {children} ) {
-
+export function AuthProvider({ children }) {
   const [data, setData] = useState({});
 
-  async function signIn({email, password}) {
-
+  async function signIn({ email, password }) {
     try {
-      const response = await api.post('/sessions', {
+      const response = await api.post("/sessions", {
         email,
-        password
+        password,
       });
       const { token, user } = response.data;
+
+      localStorage.setItem("@RocketNotes:user", JSON.stringify(user));
+      localStorage.setItem("@RocketNotes:token", token);
+
       api.defaults.headers.authorization = `Bearer ${token}`;
-      setData({token, user});
+      setData({ token, user });
     } catch (error) {
-      if(error.response) {
+      if (error.response) {
         alert(error.response.data.error);
-      }else {
-        alert('Erro ao realizar login, tente novamente mais tarde');
+      } else {
+        alert("Erro ao realizar login, tente novamente mais tarde");
       }
-
     }
-
   }
+
+  useEffect(() => {
+    const storagedUser = localStorage.getItem("@RocketNotes:user");
+    const storagedToken = localStorage.getItem("@RocketNotes:token");
+
+    if (storagedToken && storagedUser) {
+      api.defaults.headers.authorization = `Bearer ${storagedToken}`;
+      setData({ token: storagedToken, user: JSON.parse(storagedUser) });
+    }
+  }, []);
 
   return (
     <AuthContext.Provider value={{ signIn, user: data.user }}>
