@@ -39,6 +39,26 @@ export function AuthProvider({ children }) {
     setData({});
   }
 
+  async function updateProfile({user}){
+    try {
+
+      await api.put('/users', user);
+      localStorage.setItem("@RocketNotes:user", JSON.stringify(user));
+
+      setData({user, token: data.token});
+
+      alert("Perfil atualizado com sucesso")
+
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data);
+        alert(error.response.data.error);
+      } else {
+        alert("Erro ao tentar atualizar o seu perfil, tente novamente mais tarde");
+      }
+    }
+  }
+
   useEffect(() => {
     const storagedUser = localStorage.getItem("@RocketNotes:user");
     const storagedToken = localStorage.getItem("@RocketNotes:token");
@@ -53,7 +73,8 @@ export function AuthProvider({ children }) {
     <AuthContext.Provider value={{
         signIn,
         signOut,
-        user: data.user
+        updateProfile,
+        user: data.user,
       }}>
       {children}
     </AuthContext.Provider>

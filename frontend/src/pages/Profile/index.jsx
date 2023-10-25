@@ -9,12 +9,27 @@ import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 
 export function Profile() {
-  const { user } = useAuth();
+  const { user, updateProfile } = useAuth();
 
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
-  const [oldPassword, setOldPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
+  const [oldPassword, setOldPassword] = useState();
+  const [newPassword, setNewPassword] = useState();
+
+  async function handleUpdateProfile(e) {
+    e.preventDefault();
+
+    const user = {
+      name,
+      email,
+      password: newPassword,
+      old_password: oldPassword,
+    };
+
+    console.log(user);
+
+    await updateProfile({ user });
+  }
 
   return (
     <Container>
@@ -71,7 +86,7 @@ export function Profile() {
           }}
         />
 
-        <Button title={"Salvar"} />
+        <Button title={"Salvar"} onClick={handleUpdateProfile}/>
       </Form>
     </Container>
   );
