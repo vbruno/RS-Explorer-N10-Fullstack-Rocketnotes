@@ -19,8 +19,10 @@ export function AuthProvider({ children }) {
       localStorage.setItem("@RocketNotes:user", JSON.stringify(user));
       localStorage.setItem("@RocketNotes:token", token);
 
-      api.defaults.headers.authorization = `Bearer ${token}`;
+      api.defaults.headers['Authorization'] = `Bearer ${token}`
+
       setData({ token, user });
+
     } catch (error) {
       if (error.response) {
         alert(error.response.data.error);
@@ -42,7 +44,7 @@ export function AuthProvider({ children }) {
     const storagedToken = localStorage.getItem("@RocketNotes:token");
 
     if (storagedToken && storagedUser) {
-      api.defaults.headers.authorization = `Bearer ${storagedToken}`;
+      api.defaults.headers['Authorization'] = `Bearer ${storagedToken}`
       setData({ token: storagedToken, user: JSON.parse(storagedUser) });
     }
   }, []);
