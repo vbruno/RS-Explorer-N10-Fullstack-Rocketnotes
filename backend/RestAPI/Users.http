@@ -4,7 +4,7 @@
 GET {{url}}/{{resource}}/ HTTP/1.1
 
 ###
-# @name createUser
+# @name create
 POST {{url}}/{{resource}}/ HTTP/1.1
 content-type: application/json
 
@@ -18,7 +18,7 @@ content-type: application/json
 ###
 ###
 
-# @name updateUser
+# @name update
 @id = 2
 PUT {{url}}/{{resource}} HTTP/1.1
 Authorization: bearer {{token}}
