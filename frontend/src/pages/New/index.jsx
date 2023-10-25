@@ -44,6 +44,18 @@ export function New() {
 
   async function handleNewNote() {
 
+    if(!title){
+      return alert('Você precisa preencher o título antes de salvar a nota')
+    }
+
+    if(newLink) {
+      return alert('Você precisa adicionar o link antes de salvar a nota')
+    }
+
+    if(newTag) {
+      return alert('Você precisa adicionar a tag antes de salvar a nota')
+    }
+
     const note = {
       title,
       description,
