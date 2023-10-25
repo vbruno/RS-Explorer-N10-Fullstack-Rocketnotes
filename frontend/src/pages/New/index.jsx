@@ -31,6 +31,10 @@ export function New() {
     setNewTag("");
   }
 
+  function handleRemoveTag(deletedTag) {
+    setTags(prevState => prevState.filter(tag => tag !== deletedTag));
+  }
+
   return (
     <Container>
       <Header />
@@ -63,7 +67,7 @@ export function New() {
             <div className="tags">
               {
                 tags.map((tag, index) => (
-                  <NoteItem key={index} value={tag} onClick={() => {}}/>
+                  <NoteItem key={index} value={tag} onClick={() => handleRemoveTag(tag)}/>
                 ))
               }
               <NoteItem
