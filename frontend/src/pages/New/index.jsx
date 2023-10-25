@@ -1,16 +1,23 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Container, Form } from "./styles";
 
-import { Header } from '../../components/Header';
-import { Input } from '../../components/Input';
+import { api } from "../../services/api";
+
+import { Header } from "../../components/Header";
+import { Input } from "../../components/Input";
 import { Textarea } from "../../components/Textarea";
 import { NoteItem } from "../../components/NoteItem";
 import { Section } from "../../components/Section";
 import { Button } from "../../components/Button";
 
 export function New() {
+  const navigate = useNavigate();
+
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
   const [links, setLinks] = useState([]);
   const [newLink, setNewLink] = useState("");
 
@@ -18,21 +25,37 @@ export function New() {
   const [newTag, setNewTag] = useState("");
 
   function handleAddLink() {
-    setLinks(prevState => [...prevState, newLink]);
+    setLinks((prevState) => [...prevState, newLink]);
     setNewLink("");
   }
 
   function handleRemoveLink(deletedLink) {
-    setLinks(prevState => prevState.filter(link => link !== deletedLink));
+    setLinks((prevState) => prevState.filter((link) => link !== deletedLink));
   }
 
   function handleAddTag() {
-    setTags(prevState => [...prevState, newTag]);
+    setTags((prevState) => [...prevState, newTag]);
     setNewTag("");
   }
 
   function handleRemoveTag(deletedTag) {
-    setTags(prevState => prevState.filter(tag => tag !== deletedTag));
+    setTags((prevState) => prevState.filter((tag) => tag !== deletedTag));
+  }
+
+  async function handleNewNote() {
+
+    const note = {
+      title,
+      description,
+      links,
+      tags,
+    }
+
+    await api.post("/notes", note);
+
+    alert('Nota criada com sucesso!')
+
+    navigate('/')
   }
 
   return (
@@ -46,44 +69,48 @@ export function New() {
             <Link to="/"> voltar</Link>
           </header>
 
-          <Input placeholder="Título" type="text" />
-          <Textarea placeholder="Descrição" />
+          <Input placeholder="Título" type="text" onChange={(e) => setTitle(e.target.value)}/>
+          <Textarea placeholder="Descrição" onChange={(e) => setDescription(e.target.value)}/>
 
           <Section title="Links úteis">
             {links.map((link, index) => (
-              <NoteItem key={index} value={link} onClick={() => handleRemoveLink(link)}/>
+              <NoteItem
+                key={index}
+                value={link}
+                onClick={() => handleRemoveLink(link)}
+              />
             ))}
             <NoteItem
               isNew
               placeholder="Novo Link"
               value={newLink}
-              onChange={e => setNewLink(e.target.value)}
+              onChange={(e) => setNewLink(e.target.value)}
               onClick={handleAddLink}
             />
           </Section>
 
-
           <Section title="Marcadores">
             <div className="tags">
-              {
-                tags.map((tag, index) => (
-                  <NoteItem key={index} value={tag} onClick={() => handleRemoveTag(tag)}/>
-                ))
-              }
+              {tags.map((tag, index) => (
+                <NoteItem
+                  key={index}
+                  value={tag}
+                  onClick={() => handleRemoveTag(tag)}
+                />
+              ))}
               <NoteItem
                 isNew
                 placeholder="Nova tag"
-                onChange={e => setNewTag(e.target.value)}
+                onChange={(e) => setNewTag(e.target.value)}
                 value={newTag}
                 onClick={handleAddTag}
               />
             </div>
           </Section>
 
-          <Button title="Salvar" />
-
+          <Button title="Salvar" onClick={handleNewNote} />
         </Form>
       </main>
     </Container>
-  )
+  );
 }
