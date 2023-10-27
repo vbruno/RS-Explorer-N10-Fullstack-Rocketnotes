@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { FiPlus, FiSearch } from "react-icons/fi";
 import { api } from "../../services/api";
@@ -10,6 +11,8 @@ import { Note } from "../../components/Note";
 import { ButtonText } from "../../components/ButtonText";
 
 export function Home() {
+  const navigate = useNavigate();
+
   const [search, setSearch] = useState("");
   const [tags, seTags] = useState([]);
   const [tagsSelected, seTagsSelected] = useState([]);
@@ -24,6 +27,10 @@ export function Home() {
     } else {
       seTagsSelected([...tagsSelected, tagName]);
     }
+  }
+
+  function handleDetails(id) {
+    navigate(`/details/${id}`);
   }
 
   useEffect(() => {
@@ -47,10 +54,6 @@ export function Home() {
 
     fetchNotes();
   }, [tagsSelected, search]);
-
-  useEffect(() => {
-    console.log("notes:", notes);
-  }, [notes]);
 
   return (
     <Container>
@@ -91,7 +94,11 @@ export function Home() {
       <Content>
         <Section title={"Minhas notas"}>
           {notes.map((note) => (
-            <Note key={String(note.id)} data={note} />
+            <Note
+              key={String(note.id)}
+              data={note}
+              onClick={() => handleDetails(note.id)}
+            />
           ))}
         </Section>
       </Content>
