@@ -2,7 +2,7 @@
   "rest-client.environmentVariables": {
     "$shared": {
       "url": "http://localhost:3333",
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTgwNjgxMjUsImV4cCI6MTY5ODE1NDUyNSwic3ViIjoiMSJ9.poB_tdFec5xU735aUa_13PJfXRRvP1lKGP0ZHlGC7E8"
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTg0MTc3MjQsImV4cCI6MTY5ODUwNDEyNCwic3ViIjoiNyJ9.bLkfRgJ5C8DJvDD_JtUbQKYdeTDk7wtnCCiL18PWZpU"
     },
   },
   "cSpell.words": [

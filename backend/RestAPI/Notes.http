@@ -23,7 +23,7 @@ content-type: application/json
 
 ###
 # @name getNote
-GET {{url}}/{{resource}} HTTP/1.1
+GET {{url}}/{{resource}}/6 HTTP/1.1
 Authorization: bearer {{token}}
 
 ###
@@ -51,5 +51,9 @@ Authorization: bearer {{token}}
 @queryUserID = 1
 @queryTitle = Nodejs
 @queryTags = node
-GET {{url}}/{{resource}}?user_id={{queryUserID}}&title={{queryTitle}}&tags={{queryTags}} HTTP/1.1
+GET {{url}}/{{resource}}?title={{queryTitle}}&tags={{queryTags}} HTTP/1.1
+Authorization: bearer {{token}}
+
+###
+GET {{url}}/{{resource}}?title={""}&tags={""} HTTP/1.1
 Authorization: bearer {{token}}
