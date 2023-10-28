@@ -19,8 +19,8 @@ export function Profile() {
 
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
-  const [oldPassword, setOldPassword] = useState();
-  const [newPassword, setNewPassword] = useState();
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
 
   const avatarUrl = user.avatar
     ? `${api.defaults.baseURL}/files/${user.avatar}`
@@ -32,14 +32,16 @@ export function Profile() {
   async function handleUpdateProfile(e) {
     e.preventDefault();
 
-    const user = {
+    const updated = {
       name,
       email,
       password: newPassword,
       old_password: oldPassword,
     };
 
-    await updateProfile({ user, avatarFile });
+    const userUpdated = Object.assign(user, updated);
+
+    await updateProfile({ user: userUpdated, avatarFile });
   }
 
   function handleChangeAvatar(e) {

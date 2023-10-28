@@ -19,10 +19,9 @@ export function AuthProvider({ children }) {
       localStorage.setItem("@RocketNotes:user", JSON.stringify(user));
       localStorage.setItem("@RocketNotes:token", token);
 
-      api.defaults.headers['Authorization'] = `Bearer ${token}`
+      api.defaults.headers["Authorization"] = `Bearer ${token}`;
 
       setData({ token, user });
-
     } catch (error) {
       if (error.response) {
         alert(error.response.data.error);
@@ -39,31 +38,32 @@ export function AuthProvider({ children }) {
     setData({});
   }
 
-  async function updateProfile({user, avatarFile}){
+  async function updateProfile({ user, avatarFile }) {
     try {
-
-      if(avatarFile){
+      if (avatarFile) {
         const fileUploadForm = new FormData();
-        fileUploadForm.append('avatar', avatarFile);
+        fileUploadForm.append("avatar", avatarFile);
 
-        const response = await api.patch('/users/avatar', fileUploadForm);
+        const response = await api.patch("/users/avatar", fileUploadForm);
 
         user.avatar = response.data.avatar;
       }
 
-      await api.put('/users', user);
+      await api.put("/users", user);
+
       localStorage.setItem("@RocketNotes:user", JSON.stringify(user));
 
-      setData({user, token: data.token});
+      setData({ user, token: data.token });
 
-      alert("Perfil atualizado com sucesso")
-
+      alert("Perfil atualizado com sucesso");
     } catch (error) {
       if (error.response) {
         console.log(error.response.data);
         alert(error.response.data.error);
       } else {
-        alert("Erro ao tentar atualizar o seu perfil, tente novamente mais tarde");
+        alert(
+          "Erro ao tentar atualizar o seu perfil, tente novamente mais tarde"
+        );
       }
     }
   }
@@ -73,13 +73,14 @@ export function AuthProvider({ children }) {
     const storagedToken = localStorage.getItem("@RocketNotes:token");
 
     if (storagedToken && storagedUser) {
-      api.defaults.headers['Authorization'] = `Bearer ${storagedToken}`
+      api.defaults.headers["Authorization"] = `Bearer ${storagedToken}`;
       setData({ token: storagedToken, user: JSON.parse(storagedUser) });
     }
   }, []);
 
   return (
-    <AuthContext.Provider value={{
+    <AuthContext.Provider
+      value={{
         signIn,
         signOut,
         updateProfile,
