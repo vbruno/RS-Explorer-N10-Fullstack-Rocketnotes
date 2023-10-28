@@ -1,18 +1,22 @@
+import { useNavigate } from "react-router-dom";
 import { RiShutDownLine } from "react-icons/ri";
 import { Container, Profile, Logout } from "./styles";
 
 import { useAuth } from "../../Hooks/auth";
 import { api } from "../../services/api";
 
-import avatarPlaceholder from '../../assets/avatar_placeholder.svg'
+import avatarPlaceholder from "../../assets/avatar_placeholder.svg";
 
 export function Header() {
   const { signOut, user } = useAuth();
+  const navigate = useNavigate();
 
-  const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder;
-
+  const avatarUrl = user.avatar
+    ? `${api.defaults.baseURL}/files/${user.avatar}`
+    : avatarPlaceholder;
 
   function handleSignOut() {
+    navigate("/");
     signOut();
   }
 
