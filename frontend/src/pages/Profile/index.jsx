@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FiArrowLeft, FiUser, FiMail, FiLock, FiCamera } from "react-icons/fi";
 import { Container, Form, Avatar } from "./styles";
 
@@ -7,12 +7,14 @@ import { useAuth } from "../../Hooks/auth";
 
 import { api } from "../../services/api";
 
-import avatarPlaceholder from '../../assets/avatar_placeholder.svg'
+import avatarPlaceholder from "../../assets/avatar_placeholder.svg";
 
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 
 export function Profile() {
+  const navigate = useNavigate();
+
   const { user, updateProfile } = useAuth();
 
   const [name, setName] = useState(user.name);
@@ -20,7 +22,9 @@ export function Profile() {
   const [oldPassword, setOldPassword] = useState();
   const [newPassword, setNewPassword] = useState();
 
-  const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder;
+  const avatarUrl = user.avatar
+    ? `${api.defaults.baseURL}/files/${user.avatar}`
+    : avatarPlaceholder;
 
   const [avatar, setAvatar] = useState(avatarUrl);
   const [avatarFile, setAvatarFile] = useState(null);
@@ -38,7 +42,7 @@ export function Profile() {
     await updateProfile({ user, avatarFile });
   }
 
-  function handleChangeAvatar(e){
+  function handleChangeAvatar(e) {
     const file = e.target.files[0];
 
     setAvatarFile(file);
@@ -47,12 +51,16 @@ export function Profile() {
     setAvatar(imagePreview);
   }
 
+  function handleBack() {
+    navigate(-1);
+  }
+
   return (
     <Container>
       <header>
-        <Link to="/">
+        <button type="button" onClick={handleBack}>
           <FiArrowLeft />
-        </Link>
+        </button>
       </header>
 
       <Form>
@@ -61,7 +69,7 @@ export function Profile() {
 
           <label htmlFor="avatar">
             <FiCamera />
-            <input type="file" id="avatar" onChange={handleChangeAvatar}/>
+            <input type="file" id="avatar" onChange={handleChangeAvatar} />
           </label>
         </Avatar>
 
@@ -102,7 +110,7 @@ export function Profile() {
           }}
         />
 
-        <Button title={"Salvar"} onClick={handleUpdateProfile}/>
+        <Button title={"Salvar"} onClick={handleUpdateProfile} />
       </Form>
     </Container>
   );
